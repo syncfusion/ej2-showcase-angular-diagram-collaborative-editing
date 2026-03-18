@@ -1,0 +1,189 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+}
+
+/* ====================== MAIN CONTAINER ====================== */
+.pp-container {
+  width: 280px;
+  height: 100%;
+  background-color: #ffffff;
+  border-left: 1px solid #e5e5e5;
+  overflow-y: auto;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px;
+  color: #333333;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ====================== NO SELECTION STATE ====================== */
+.no-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  text-align: center;
+  color: #888888;
+}
+
+.no-selection-inner {
+  max-width: 220px;
+}
+
+.no-selection-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555555;
+}
+
+.no-sel-sub {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+/* ====================== EDITOR CONTAINER ====================== */
+.db-property-editor-container {
+  padding: 16px;
+}
+
+.pp-section {
+  /* wrapper - no extra styles needed */
+}
+
+/* ====================== HEADERS & SEPARATORS ====================== */
+.db-prop-header-text.pp-header {
+  font-size: 15px;
+  font-weight: 600;
+  padding-bottom: 8px;
+  color: #222222;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.pp-subheader {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #555555;
+  margin: 18px 0 8px 0;
+}
+
+.db-prop-separator {
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 12px 0;
+}
+
+/* ====================== DIMENSIONS (flex rows) ====================== */
+.pp-dim-row,
+.pp-dim-row-3,
+.pp-dim-row-single {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pp-dim-row-single {
+  max-width: 48%; /* R (rotation) looks better narrower */
+}
+
+.pp-inline-field {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pp-inline-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+}
+
+.pp-inline-occupy {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ====================== GRID SYSTEM (2 controls per row) ====================== */
+.pp-grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pp-grid-2-1 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.pp-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.pp-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.pp-label {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #666666;
+}
+
+/* ====================== INSERT LINK (full width) ====================== */
+.pp-row {
+  margin-bottom: 12px;
+}
+
+/* ====================== OPACITY ROW -  ================================ */
+.pp-opacity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pp-opacity-row .pp-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666666;
+  white-space: nowrap;
+  min-width: 58px;
+}
+
+.pp-opacity-row ejs-slider {
+  flex: 1;
+  min-width: 0;
+}
+
+.opacity-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222222;
+  min-width: 30px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ====================== TEXT TOOLBAR ====================== */
+.pp-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  justify-content: space-between;
+}
+
+@media (max-width: 300px) {
+  .pp-grid-2-1 {
+    grid-template-columns: 1fr;
+  }
+}

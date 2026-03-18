@@ -1,0 +1,67 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Outer shell ------------------------------------------------- */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+/* --- Toolbar ------------------------------------------------------ */
+.toolbar-region {
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+/* --- Content row -------------------------------------------------- */
+.content-region {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-bottom: 65px;
+}
+
+/* Symbol Palette */
+.palette-region {
+  flex-shrink: 0;
+  width: 245px;
+  min-width: 195px;
+  border-right: 1px solid #d0d0d0;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Diagram canvas */
+.diagram-region {
+  flex: 1;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+}
+
+/* Property panel (right side) */
+.panel-region {
+  flex-shrink: 0;
+  width: 325px;
+  min-width: 325px;
+  border-left: 1px solid #d0d0d0;
+  border-top: 1px solid #d0d0d0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+}
+
+/* --- Banner row --------------------------------------------------- */
+.banner-region {
+  flex-shrink: 0;
+}

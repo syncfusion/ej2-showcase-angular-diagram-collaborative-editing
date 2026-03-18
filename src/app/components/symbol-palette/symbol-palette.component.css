@@ -1,0 +1,55 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.palette-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+}
+
+.more-shapes {
+  height: 40px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+/* Hover/focus styles */
+.more-shapes:hover,
+.more-shapes:focus {
+  background-color: #f0f0f0;
+  outline: none;
+}
+
+/* Optional focus ring for keyboard users */
+.more-shapes:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+}
+
+/* Icon & label styles mapped from your inline styles */
+.more-shapes .icon {
+  font-size: 14px;
+}
+
+.more-shapes .label {
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1;
+  color: inherit; /* inherit text color */
+}
+

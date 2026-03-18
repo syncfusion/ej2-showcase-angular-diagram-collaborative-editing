@@ -1,0 +1,21 @@
+<ejs-diagram
+  #diagram
+  id="diagram"
+  width="100%"
+  height="100%"
+  [nodes]="initialNodes"
+  [connectors]="initialConnectors"
+  [constraints]="diagramConstraints"
+  [enableCollaborativeEditing]="true"
+  [snapSettings]="{ horizontalGridlines: gridlines, verticalGridlines: gridlines }"
+  [scrollSettings]="{ scrollLimit: 'Infinity' }"
+  [tool]="DiagramTools.Default"
+  [getNodeDefaults]="getNodeDefaults.bind(this)"
+  [getConnectorDefaults]="getConnectorDefaults.bind(this)"
+  (selectionChange)="onSelectionChange($event)"
+  (textEdit)="onTextEdit($event)"
+  (historyChange)="onHistoryChange($event)"
+  (positionChange)="onPositionChange($event)"
+  (sizeChange)="onSizeChange($event)"
+  (rotateChange)="onRotateChange($event)"
+></ejs-diagram>

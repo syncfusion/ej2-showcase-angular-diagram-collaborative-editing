@@ -1,0 +1,126 @@
+<!-- ======================================================
+     BANNER: Title + Guest Counter + Branding
+     ====================================================== -->
+<div class="banner-container">
+  <div class="banner-left">
+    <h1 class="banner-title">Live Diagram Collaboration</h1>
+  </div>
+
+  <div class="banner-right">
+    <div class="guest-counter">
+      <span class="guest-label">Available Guests:</span>
+      <span class="guest-count">{{ availableGuests }}</span>
+    </div>
+    <div class="branding">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-icon">
+        <g clip-path="url(#clip0_289_40)">
+          <path d="M6.20884 3.2207H1.66846V7.76109H6.20884V3.2207Z" fill="#3543A8"/>
+          <path d="M16.4785 0.833896L13.4849 4.35742L17.0084 7.3511L20.0021 3.82757L16.4785 0.833896Z" fill="#FF8600"/>
+          <path d="M11.6058 3.2207H7.06543V7.76109H11.6058V3.2207Z" fill="#3543A8"/>
+          <path d="M6.20884 8.61914H1.66846V13.1595H6.20884V8.61914Z" fill="#3543A8"/>
+          <path d="M11.6058 8.61914H7.06543V13.1595H11.6058V8.61914Z" fill="#3543A8"/>
+          <path d="M17.0074 8.61914H12.467V13.1595H17.0074V8.61914Z" fill="#FF8600"/>
+          <path d="M6.20884 14.0449H1.66846V18.5853H6.20884V14.0449Z" fill="#3543A8"/>
+          <path d="M11.6058 14.0449H7.06543V18.5853H11.6058V14.0449Z" fill="#3543A8"/>
+          <path d="M17.034 14.0449H12.4937V18.5853H17.034V14.0449Z" fill="#3543A8"/>
+        </g>
+        <defs>
+          <clipPath id="clip0_289_40">
+            <rect width="20" height="20" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+
+      <span class="powered-by">Powered by</span>
+      <a href="https://www.syncfusion.com/angular-components/angular-diagram?tag=es-freetools-diagram-collaboration-sample-ft"
+         target="_blank" rel="noopener noreferrer" class="bannerText">
+        Syncfusion Diagram Component
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================
+     PRIMARY TOOLBAR
+     ====================================================== -->
+<div class="toolbar-container">
+  <ejs-toolbar #ejsToolbar id="toolbarEditor" [height]="40" (clicked)="onToolbarClick($event)" cssClass="clean-toolbar">
+    <e-items>
+      <!-- File ops -->
+      <e-item id="new" prefixIcon="e-icons e-circle-add" tooltipText="New Diagram"></e-item>
+      <e-item id="open" prefixIcon="e-icons e-folder-open" tooltipText="Open Diagram"></e-item>
+      <e-item id="save" prefixIcon="e-icons e-save" tooltipText="Save Diagram"></e-item>
+      <e-item id="print" prefixIcon="e-icons e-print" tooltipText="Print"></e-item>
+      <e-item
+        type="Button"
+        [template]="exportTpl"
+        tooltipText="Export"
+      ></e-item>
+      <e-item type="Separator"></e-item>
+
+      <!-- Clipboard -->
+      <e-item id="cut" prefixIcon="e-icons e-cut" tooltipText="Cut" [disabled]="!toolbarState.isCutEnabled"></e-item>
+      <e-item id="copy" prefixIcon="e-icons e-copy" tooltipText="Copy" [disabled]="!toolbarState.isCopyEnabled"></e-item>
+      <e-item id="paste" prefixIcon="e-icons e-paste" tooltipText="Paste" [disabled]="!toolbarState.isPasteEnabled"></e-item>
+      <e-item type="Separator"></e-item>
+
+      <!-- History -->
+      <e-item id="undo" prefixIcon="e-icons e-undo" tooltipText="Undo" [disabled]="!toolbarState.isUndoEnabled"></e-item>
+      <e-item id="redo" prefixIcon="e-icons e-redo" tooltipText="Redo" [disabled]="!toolbarState.isRedoEnabled"></e-item>
+      <e-item type="Separator"></e-item>
+
+      <!-- Drawing tools -->
+      <e-item type="Button" [template]="shapeTpl" tooltipText="Draw Shape"></e-item>
+      <e-item type="Button" [template]="connectorTpl" tooltipText="Draw Connector"></e-item>
+      <e-item type="Button" [template]="groupTpl" tooltipText="Group" [disabled]="!toolbarState.isGroupEnabled && !toolbarState.isUngroupEnabled"></e-item>
+      <e-item type="Separator"></e-item>
+
+      <!-- Selection tools -->
+      <e-item id="pointer" prefixIcon="e-icons e-mouse-pointer" tooltipText="Pointer Tool"></e-item>
+      <e-item id="text" prefixIcon="e-icons e-caption" tooltipText="Text Tool"></e-item>
+      <e-item id="pan" prefixIcon="e-icons e-pan" tooltipText="Pan Tool"></e-item>
+      <e-item type="Separator"></e-item>
+
+      <!-- View -->
+      <e-item id="zoomIn" prefixIcon="e-icons e-zoom-in" tooltipText="Zoom In"></e-item>
+      <e-item id="zoomOut" prefixIcon="e-icons e-zoom-out" tooltipText="Zoom Out"></e-item>
+      <e-item id="fitToPage" prefixIcon="e-icons e-zoom-to-fit" tooltipText="Fit to Page"></e-item>
+    </e-items>
+  </ejs-toolbar>
+</div>
+
+<!-- -- Dropdown Templates ------------------------------->
+<ng-template #exportTpl>
+   <button ejs-dropdownbutton
+    [items]="exportItems"
+    iconCss="e-icons e-export"
+    cssClass="custom-export-dropdown"
+    (select)="onExportSelect($event)"
+  > </button>
+</ng-template>
+
+<ng-template #shapeTpl>
+   <button ejs-dropdownbutton
+    [items]="shapeItems"
+    iconCss="e-shapes e-icons"
+    cssClass="tb-item-middle"
+    (select)="onShapeSelect($event)"
+  > </button>
+</ng-template>
+
+<ng-template #connectorTpl>
+   <button ejs-dropdownbutton
+    [items]="connectorItems"
+    iconCss="sf-diagram-icon-orthogonal"
+    cssClass="tb-item-middle"
+    (select)="onConnectorSelect($event)"
+  > </button>
+</ng-template>
+
+<ng-template #groupTpl>
+  <button ejs-dropdownbutton
+    [items]="groupItems"
+    iconCss="e-icons e-group-1"
+    (select)="onGroupSelect($event)"
+  > </button>
+</ng-template>

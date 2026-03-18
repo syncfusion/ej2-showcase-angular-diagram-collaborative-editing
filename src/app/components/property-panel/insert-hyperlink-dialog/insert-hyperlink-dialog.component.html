@@ -1,0 +1,47 @@
+<ejs-dialog
+  [visible]="visible"
+  header="Insert Hyperlink"
+  [width]="'420px'"
+  [showCloseIcon]="true"
+  [isModal]="true"
+  [animationSettings]="animationSettings"
+  [buttons]="dialogButtons"
+  target="body"
+  (close)="onDialogClose()"
+>
+  <ng-template #content>
+    <div class="ihl-body">
+
+      <!-- URL -->
+      <div class="ihl-field">
+        <label class="ihl-label" for="ihlUrl">URL</label>
+        <input
+          id="ihlUrl"
+          class="ihl-input"
+          [class.ihl-input-error]="urlError"
+          type="text"
+          [(ngModel)]="url"
+          placeholder="https://example.com"
+          autocomplete="off"
+        />
+        @if (urlError) {
+          <span class="ihl-error">{{ urlError }}</span>
+        }
+      </div>
+
+      <!-- Display Text -->
+      <div class="ihl-field">
+        <label class="ihl-label" for="ihlDisplayText">Display Text (Optional)</label>
+        <input
+          id="ihlDisplayText"
+          class="ihl-input"
+          type="text"
+          [(ngModel)]="displayText"
+          placeholder="e.g. Google"
+          autocomplete="off"
+        />
+      </div>
+
+    </div>
+  </ng-template>
+</ejs-dialog>
