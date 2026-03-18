@@ -1,0 +1,45 @@
+<ejs-dialog
+  #manageDialog
+  id="moreShapesDialog"
+  [visible]="visible"
+  header="Shapes"
+  [width]="'700px'"
+  [height]="'500px'"
+  [isModal]="true"
+  [showCloseIcon]="true"
+  [buttons]="dialogButtons"
+  (close)="onDialogClose()"
+  cssClass="shapes-dialog"
+  [animationSettings]="animationSettings"
+>
+  <ng-template #content>
+    <div class="shapes-dialog-inner">
+      <!-- Left Panel: Syncfusion ListView with checkboxes -->
+      <div class="shapes-dialog-left">
+        <ejs-listview
+          #listview
+          id="moreShapesList"
+          [dataSource]="palettesData"
+          [fields]="fields"
+          [showCheckBox]="true"
+          (select)="onItemSelect($event)"
+        ></ejs-listview>
+      </div>
+
+      <!-- Right Panel: Preview -->
+      <div class="shapes-dialog-right">
+        <img
+          *ngIf="selectedId && !imageLoadError"
+          [src]="'assets/shapes_images/' + selectedId + '.png'"
+          class="preview-image"
+          alt="Palette Preview"
+          (error)="onImageLoadError()"
+        />
+        <div *ngIf="!selectedId || imageLoadError" class="placeholder">
+          <span class="e-icons e-image"></span>
+          <p>Select a shape category to preview</p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ejs-dialog>

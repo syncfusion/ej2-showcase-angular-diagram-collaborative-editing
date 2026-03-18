@@ -1,0 +1,46 @@
+.ihl-body {
+  padding: 8px 4px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ihl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ihl-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #444;
+}
+
+.ihl-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  font-size: 13px;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  outline: none;
+  font-family: 'Segoe UI', sans-serif;
+  transition: border-color 0.15s;
+}
+
+.ihl-input:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.15);
+}
+
+.ihl-input-error {
+  border-color: #e53935 !important;
+}
+
+.ihl-error {
+  font-size: 11px;
+  color: #e53935;
+  margin-top: 2px;
+}
+

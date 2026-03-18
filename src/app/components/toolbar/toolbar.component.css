@@ -1,0 +1,31 @@
+/* Toolbar banner classes */
+.banner-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #046ae5;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-bottom: 1px solid #005a9e;
+}
+.banner-left { display:flex; align-items:center; }
+.banner-title { margin:0; font-size:16px; font-weight:600; color:#fff; white-space:nowrap; }
+.banner-right { display:flex; align-items:center; gap:16px; }
+.guest-counter { display:flex; align-items:center; gap:6px; padding:4px 10px; background-color: rgba(255,255,255,0.15); border-radius:3px; border:1px solid rgba(255,255,255,0.25); }
+.guest-label { font-size:12px; color: rgba(255,255,255,0.9); font-weight:500; }
+.guest-count { font-size:13px; color:#fff; font-weight:700; }
+.branding { display:flex; align-items:center; gap:4px; font-size:14px;font-weight: 500; white-space:nowrap; }
+.brand-icon { font-size:12px; }
+.powered-by { color: rgba(255,255,255,0.85); font-weight:400; }
+.brand-name { color:#ffffff; font-weight:600; }
+.primary-toolbar-container { display:flex; gap:8px; align-items:center; flex-wrap:wrap; flex:1 1; }
+.powered-by {
+  padding-left: 3px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
+.bannerText {
+  text-decoration: none;
+  color: #fff30f;
+  font-size: 14px;
+}

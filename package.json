@@ -1,0 +1,61 @@
+{
+  "name": "@syncfusion/ej2-angular-collaborative-diagram-editing",
+  "version": "0.0.1",
+  "description": "Essential JS 2 - Collaborative Diagram Editor",
+  "author": "Syncfusion Inc.",
+  "license": "SEE LICENSE IN license",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "ci-publish": "gulp publish-sample",
+    "hide-license": "gulp hide-license"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "packageManager": "npm@11.9.0",
+  "dependencies": {
+    "@angular/animations": "^21.2.0",
+    "@angular/common": "^21.1.0",
+    "@angular/compiler": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/platform-browser": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "@microsoft/signalr": "^10.0.0",
+    "@syncfusion/ej2-angular-base": "*",
+    "@syncfusion/ej2-angular-buttons": "*",
+    "@syncfusion/ej2-angular-diagrams": "*",
+    "@syncfusion/ej2-angular-dropdowns": "*",
+    "@syncfusion/ej2-angular-inputs": "*",
+    "@syncfusion/ej2-angular-lists": "*",
+    "@syncfusion/ej2-angular-navigations": "*",
+    "@syncfusion/ej2-angular-popups": "*",
+    "@syncfusion/ej2-angular-splitbuttons": "*",
+    "@syncfusion/ej2-angular-notifications": "*",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@syncfusion/ej2-showcase-helper": "*",
+    "@angular/build": "^21.1.4",
+    "@angular/cli": "^21.1.4",
+    "@angular/compiler-cli": "^21.1.0",
+    "jsdom": "^27.1.0",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
+  }
+}
