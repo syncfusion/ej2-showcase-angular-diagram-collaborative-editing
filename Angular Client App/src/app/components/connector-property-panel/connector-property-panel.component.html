@@ -1,0 +1,262 @@
+<!-- No-selection / panel split -->
+ @if (!properties) {
+  <div class="db-connector-panel-container">
+    <div class="db-no-selection">
+      <h3 class="db-no-selection-text">No connector selected</h3>
+      <p class="db-no-selection-subtext">Select a connector to edit its properties</p>
+    </div>
+  </div>
+ } @else {
+  <div class="db-connector-panel-container">
+
+    <div class="db-connector-content">
+      <!-- Header -->
+      <div class="db-connector-header-title">Connector Properties</div>
+      
+      <!-- Connector Type + Stroke Color -->
+      <div class="db-prop-group">
+        <div class="db-two-column-row">
+          <div class="db-col">
+            <label class="db-prop-label">Connector Type</label>
+            <ejs-dropdownlist
+              [dataSource]="connectorTypes"
+              [fields]="{ text: 'text', value: 'value' }"
+              [value]="properties.connectorType || 'Straight'"
+              (change)="handlePropertyUpdate('connectorType', $event.value)"
+              width="100%">
+            </ejs-dropdownlist>
+          </div>
+
+          <div class="db-col-sm">
+            <label class="db-prop-label">Stroke Color</label>
+            <input ejs-colorpicker type="color"
+              [value]="properties.strokeColor"
+              (change)="handlePropertyUpdate('strokeColor', $event.value)"
+              mode="Palette" [showButtons]="false">
+          </div>
+        </div>
+      </div>
+
+      <!-- Stroke Style + Thickness -->
+      <div class="db-prop-group">
+        <div class="db-two-column-row">
+          <div class="db-col">
+            <label class="db-prop-label">Stroke Style</label>
+            <ejs-dropdownlist
+              [dataSource]="strokeStyles"
+              [fields]="{ text: 'text', value: 'value' }"
+              [value]="properties.strokeDashArray"
+              (change)="handlePropertyUpdate('strokeDashArray', $event.value)"
+              [itemTemplate]="lineItemTemplate"
+              [valueTemplate]="lineValueTemplate"
+              width="100%">
+              <ng-template #lineItemTemplate let-data>
+                <div class="db-ddl-template-style">
+                  <span [ngClass]="data?.className"></span>
+                </div>
+              </ng-template>
+              <ng-template #lineValueTemplate let-data>
+                <div class="db-ddl-template-style">
+                  <span [ngClass]="data?.className"></span>
+                </div>
+              </ng-template>
+            </ejs-dropdownlist>
+          </div>
+
+          <div class="db-col-sm">
+            <label class="db-prop-label">Thickness</label>
+            <ejs-numerictextbox
+              [value]="properties.strokeWidth || 2"
+              format="n0" [min]="1" [max]="20" [step]="0.5" [showSpinButton]="true"
+              (change)="handlePropertyUpdate('strokeWidth', $event.value)"
+              width="100%">
+            </ejs-numerictextbox>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start Arrow -->
+      <div class="db-prop-group">
+        <div class="db-two-column-row">
+          <div class="db-col">
+            <label class="db-prop-label">Start Arrow</label>
+            <ejs-dropdownlist
+              [dataSource]="decoratorTypes"
+              [fields]="{ text: 'text', value: 'value' }"
+              [value]="sourceDecoratorType || 'None'"
+              (change)="onSourceDecoratorChange($event.value)"
+              width="100%">
+            </ejs-dropdownlist>
+          </div>
+          <div class="db-col">
+            <label class="db-prop-label">Size</label>
+            <ejs-numerictextbox
+              [value]="properties.startArrowSize || 10"
+              format="n0" [min]="0" [max]="30" [step]="1" [showSpinButton]="true"
+              (change)="handlePropertyUpdate('startArrowSize', $event.value)"
+              width="100%"
+              [enabled]="sourceDecoratorType !== 'None'">
+            </ejs-numerictextbox>
+          </div>
+        </div>
+      </div>
+
+      <!-- End Arrow -->
+      <div class="db-prop-group">
+        <div class="db-two-column-row">
+          <div class="db-col">
+            <label class="db-prop-label">End Arrow</label>
+            <ejs-dropdownlist
+              [dataSource]="decoratorTypes"
+              [fields]="{ text: 'text', value: 'value' }"
+              [value]="targetDecoratorType || 'Arrow'"
+              (change)="onTargetDecoratorChange($event.value)"
+              width="100%">
+            </ejs-dropdownlist>
+          </div>
+          <div class="db-col">
+            <label class="db-prop-label">Size</label>
+            <ejs-numerictextbox
+              [value]="properties.endArrowSize || 10"
+              format="n0" [min]="0" [max]="30" [step]="1" [showSpinButton]="true"
+              (change)="handlePropertyUpdate('endArrowSize', $event.value)"
+              width="100%"
+              [enabled]="targetDecoratorType !== 'None'">
+            </ejs-numerictextbox>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridging -->
+      <div class="db-prop-group">
+        <ejs-checkbox
+          label="Bridging"
+          [checked]="properties.bridging || false"
+          (change)="handlePropertyUpdate('bridging', $event.checked)">
+        </ejs-checkbox>
+      </div>
+
+      <!-- Opacity -->
+      <div class="db-prop-group">
+        <label class="db-prop-label">Opacity</label>
+        <div class="db-slider-container">
+          <ejs-slider
+            [value]="(properties.opacity || 1) * 100"
+            [min]="0" [max]="100" [step]="5"
+            type="MinRange" [showButtons]="false"
+            [tooltip]="{ isVisible: false }"
+            (change)="handlePropertyUpdate('opacity', ($event.value || 100) / 100)"
+            width="100%">
+          </ejs-slider>
+          <span class="db-opacity-value">{{ (properties.opacity || 1) * 100 | number:'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <!-- ====================== TEXT / ANNOTATION ====================== -->
+      <div *ngIf="hasAnnotation">
+        <div class="db-section-divider">
+          <span class="db-section-title">Text</span>
+        </div>
+
+        <!-- Font Family + Size -->
+        <div class="db-prop-group">
+          <div class="db-two-column-row">
+            <div class="db-col">
+              <label class="db-prop-label">Font</label>
+              <ejs-dropdownlist
+                [dataSource]="fontFamilies"
+                [fields]="{ text: 'text', value: 'value' }"
+                [value]="properties.fontFamily || 'Arial'"
+                (change)="handlePropertyUpdate('fontFamily', $event.value)"
+                width="100%">
+              </ejs-dropdownlist>
+            </div>
+            <div class="db-col-sm">
+              <label class="db-prop-label">Size</label>
+              <ejs-numerictextbox
+                [value]="properties.fontSize || 12"
+                format="n0" [min]="8" [max]="72" [step]="2" [showSpinButton]="true"
+                (change)="handlePropertyUpdate('fontSize', $event.value)"
+                width="100%">
+              </ejs-numerictextbox>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alignment + Font Color -->
+        <div class="db-prop-group">
+          <div class="db-two-column-row">
+            <div class="db-col">
+              <label class="db-prop-label">Alignment</label>
+              <ejs-dropdownlist
+                [dataSource]="annotationAlignmentOptions"
+                [fields]="{ text: 'text', value: 'value' }"
+                [value]="properties.textPosition"
+                (change)="handlePropertyUpdate('textPosition', $event.value)"
+                width="100%">
+              </ejs-dropdownlist>
+            </div>
+            <div class="db-col-sm">
+              <label class="db-prop-label">Font Color</label>
+              <input ejs-colorpicker type="color"
+                [value]="properties.fontColor"
+                (change)="handlePropertyUpdate('fontColor', $event.value)"
+                mode="Palette" [showButtons]="false">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bold / Italic / Underline + Align -->
+        <div class="db-format-buttons">
+          <div class="db-pp-btn-group">
+            <button ejs-button
+              class="e-flat db-format-btn db-format-btn-bold"
+              [class.e-active]="properties.bold"
+              (click)="handlePropertyUpdate('bold', !properties.bold)">B</button>
+
+            <button ejs-button
+              class="e-flat db-format-btn db-format-btn-italic"
+              [class.e-active]="properties.italic"
+              (click)="handlePropertyUpdate('italic', !properties.italic)">I</button>
+
+            <button ejs-button
+              class="e-flat db-format-btn db-format-btn-underline"
+              [class.e-active]="properties.underline"
+              (click)="handlePropertyUpdate('underline', !properties.underline)">U</button>
+          </div>
+
+          <div class="db-pp-btn-group db-align-btns">
+            <button ejs-button [cssClass]="properties.textAlign === 'Left' ? 'e-flat e-active' : 'e-flat'"
+              (click)="handlePropertyUpdate('textAlign', 'Left')" aria-label="align-left">
+              <i class="e-icons e-align-left"></i>
+            </button>
+            <button ejs-button [cssClass]="properties.textAlign === 'Center' ? 'e-flat e-active' : 'e-flat'"
+              (click)="handlePropertyUpdate('textAlign', 'Center')" aria-label="align-center">
+              <i class="e-icons e-align-center"></i>
+            </button>
+            <button ejs-button [cssClass]="properties.textAlign === 'Right' ? 'e-flat e-active' : 'e-flat'"
+              (click)="handlePropertyUpdate('textAlign', 'Right')" aria-label="align-right">
+              <i class="e-icons e-align-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Text Opacity -->
+        <div class="db-prop-group">
+          <label class="db-prop-label">Text Opacity</label>
+          <div class="db-slider-container">
+            <ejs-slider
+              [value]="(properties.textOpacity || 1) * 100"
+              [min]="0" [max]="100" [step]="5"
+              type="MinRange" [showButtons]="false"
+              [tooltip]="{ isVisible: false }"
+              (change)="handlePropertyUpdate('textOpacity', ($event.value || 100) / 100)"
+              width="100%">
+            </ejs-slider>
+            <span class="db-opacity-value">{{ (properties.textOpacity || 1) * 100 | number:'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ }

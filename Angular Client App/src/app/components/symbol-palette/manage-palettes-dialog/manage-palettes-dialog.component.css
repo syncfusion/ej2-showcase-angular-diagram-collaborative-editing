@@ -1,0 +1,58 @@
+/* Overall dialog styling */
+
+/* Inner flex layout */
+.shapes-dialog-inner {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+/* ===================== LEFT PANEL ===================== */
+/* Narrower width so it takes LESS space */
+.shapes-dialog-left {
+    width: 190px;
+    border-right: 1px solid #e5e5e5;
+    background: #ffffff;
+    overflow-y: auto;
+}
+
+/* ===================== RIGHT PANEL ===================== */
+/* Fills ALL remaining space + fully scrollable */
+.shapes-dialog-right {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+    background: #ffffff;
+}
+
+/* Preview image - fills available space and scrolls when needed */
+.preview-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: none;
+}
+
+/* Placeholder when nothing selected */
+.placeholder {
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #999999;
+    background: #fafafa;
+}
+
+.placeholder .e-icons.e-image {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+}
+
+.placeholder p {
+    font-size: 14px;
+    margin: 0;
+}
