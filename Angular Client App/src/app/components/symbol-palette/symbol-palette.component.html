@@ -1,0 +1,34 @@
+<div class="palette-wrapper">
+  <!-- Symbol Palette -->
+  <ejs-symbolpalette
+    id="symbolpalette"
+    expandMode="Multiple"
+    enableSearch="true"
+    [palettes]="activePalettes"
+    width="100%"
+    height="calc(100% - 5px)"
+    [symbolHeight]="50"
+    [symbolWidth]="50"
+    [symbolMargin]="{ left: 8, right: 8, top: 8, bottom: 8 }"
+    [getNodeDefaults]="getNodeDefaults"
+  ></ejs-symbolpalette>
+</div>
+
+<!-- "More Shapes" -->
+ <div
+  class="more-shapes"
+  (click)="openManageDialog()"
+  role="button"
+  tabindex="0"
+>
+  <span class="e-icons e-add-icon icon" aria-hidden="true"></span>
+  <span class="label">More Shapes</span>
+</div>
+
+<!-- Manage Palettes Dialog -->
+<app-manage-palettes-dialog
+  [palettes]="paletteMeta"
+  [visible]="isDialogOpen"
+  (apply)="onDialogApply($event)"
+  (cancel)="onDialogCancel()"
+></app-manage-palettes-dialog>

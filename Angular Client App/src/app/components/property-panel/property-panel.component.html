@@ -1,0 +1,310 @@
+@if (!properties) {
+<div class="pp-container no-selection">
+  <div class="no-selection-inner">
+    <h3 class="no-selection-title">
+      @if (!selectedItem) { No selection }
+      @else if (selectedItem.type === 'annotation') { Annotation selected }
+      @else { No selection }
+    </h3>
+    <p class="no-sel-sub">Select a node to edit its properties</p>
+  </div>
+</div>
+} @else {
+<div class="pp container db-property-editor-container">
+  <div class="pp-section">
+
+    <!-- Header -->
+    <div class="db-prop-header-text pp-header">Node Properties</div>
+
+    <!-- --- Dimensions --- -->
+    <div class="pp-subheader">Dimensions</div>
+
+    <!-- Row 1: X | Y -->
+    <div class="pp-dim-row">
+      <div class="pp-inline-field">
+        <label class="pp-inline-label">X</label>
+        <ejs-numerictextbox
+          [value]="properties.offsetX"
+          format="n0" [step]="10" [showSpinButton]="true"
+          (change)="handlePropertyUpdate('offsetX', $event.value)"
+          width="100%">
+        </ejs-numerictextbox>
+      </div>
+      <div class="pp-inline-field">
+        <label class="pp-inline-label">Y</label>
+        <ejs-numerictextbox
+          [value]="properties.offsetY"
+          format="n0" [step]="10" [showSpinButton]="true"
+          (change)="handlePropertyUpdate('offsetY', $event.value)"
+          width="100%">
+        </ejs-numerictextbox>
+      </div>
+    </div>
+
+    <!-- Row 2: W | H | A-->
+    <div class="pp-dim-row-3">
+      <div class="pp-inline-occupy">
+        <label class="pp-inline-label">W</label>
+        <ejs-numerictextbox
+          [value]="properties.width"
+          format="n0" [min]="10" [step]="10" [showSpinButton]="true"
+          (change)="handlePropertyUpdate('width', $event.value)"
+          width="100%">
+        </ejs-numerictextbox>
+      </div>
+
+      <div class="pp-inline-occupy">
+        <label class="pp-inline-label">H</label>
+        <ejs-numerictextbox
+          [value]="properties.height"
+          format="n0" [min]="10" [step]="10" [showSpinButton]="true"
+          (change)="handlePropertyUpdate('height', $event.value)"
+          width="100%">
+        </ejs-numerictextbox>
+      </div>
+
+      <div class="pp-inline-occupy">
+        <button ejs-button
+        [iconCss]="properties.aspectRatio ? 'e-icons e-lock' : 'e-icons e-unlock'"
+        title="Aspect Ratio"
+        (click)="handlePropertyUpdate('aspectRatio', !properties.aspectRatio)"></button>
+      </div>
+    </div>
+
+    <!-- Row 3: R -->
+    <div class="pp-dim-row-single">
+      <div class="pp-inline-field">
+        <label class="pp-inline-label">R</label>
+        <ejs-numerictextbox
+          [value]="properties.rotateAngle"
+          format="n0" [min]="0" [max]="360" [step]="15" [showSpinButton]="true"
+          (change)="handlePropertyUpdate('rotateAngle', $event.value)"
+          width="100%">
+        </ejs-numerictextbox>
+      </div>
+    </div>
+
+    <div class="db-prop-separator"></div>
+
+    <!-- Insert -->
+    <div class="pp-subheader">Insert</div>
+    <div class="pp-row">
+      <button ejs-button cssClass="e-outline" iconCss="e-icons e-link" 
+      (click)="openHyperlinkDialog()" [disabled]="!selectedItem || selectedItem.type !== 'node'">
+        Insert Link</button>
+    </div>
+
+    <div class="db-prop-separator"></div>
+
+    <div class="pp-label">Background Type</div>
+    <div class="pp-grid pp-grid-2-1">
+      <div class="pp-field">
+        <ejs-dropdownlist
+          [dataSource]="backgroundTypes"
+          [fields]="{ text: 'text', value: 'value' }"
+          [value]="properties.isGradient ? 'Gradient' : 'Solid'"
+          (change)="onGradientChange($event.value)"
+          width="100%">
+        </ejs-dropdownlist>
+      </div>
+      <div class="pp-field">
+        <ejs-input ejs-colorpicker type="color"
+          [value]="properties.fillColor"
+          mode="Palette" [showButtons]="false"
+          (change)="onFillColorChange($event)" />
+      </div>
+    </div>
+
+    <!-- Gradient extra controls (only when gradient is ON) - Secondary + Direction in one row -->
+    @if (showGradient) {
+    <div class="pp-label">Gradient Style</div>
+    <div class="pp-grid pp-grid-2-1">
+      <!-- Direction dropdown -->
+      <div class="pp-field">
+        <ejs-dropdownlist
+          [dataSource]="gradientDirections"
+          [fields]="{ text: 'text', value: 'value' }"
+          [value]="properties.gradientDirection"
+          (change)="onGradientDirectionChange($event)"
+          width="100%"
+        ></ejs-dropdownlist>
+      </div>
+      <!-- Secondary color -->
+      <div class="pp-field">
+        <ejs-input ejs-colorpicker type="color"
+          [value]="properties.gradientColor"
+          mode="Palette" [showButtons]="false"
+          (change)="onGradientColorChange($event)" />
+      </div>
+    </div>
+    }
+
+    <!-- Border -->
+    <div class="pp-label">Border Type</div>
+    <div class="pp-grid pp-grid-2-1">
+      <div class="pp-field">
+        <ejs-dropdownlist
+          [dataSource]="borderTypes"
+          [fields]="{ text: 'text', value: 'value' }"
+          [value]="properties.borderDashArray"
+          (change)="handlePropertyUpdate('borderDashArray', $event.value)"
+          [itemTemplate]="lineItemTemplate"
+          [valueTemplate]="lineValueTemplate"
+          width="100%">
+          <ng-template #lineItemTemplate let-data>
+            <div class="db-ddl-template-style">
+              <span [ngClass]="data?.className"></span>
+            </div>
+          </ng-template>
+          <ng-template #lineValueTemplate let-data>
+            <div class="db-ddl-template-style">
+              <span [ngClass]="data?.className"></span>
+            </div>
+          </ng-template>
+        </ejs-dropdownlist>
+      </div>
+
+      <div class="pp-field">
+        <ejs-input ejs-colorpicker type="color"
+          [value]="properties.strokeColor"
+          mode="Palette" [showButtons]="false" 
+          (change)="onStrokeColorChange($event)" />
+      </div>
+    </div>
+
+    <!-- Thickness -->
+    <div class="pp-label">Thickness</div>
+    <div class="pp-grid pp-grid-2-1">
+      <div class="pp-field">
+        <ejs-numerictextbox
+          [value]="properties.strokeWidth"
+          format="n0" [min]="0" [max]="20" [step]="1" [showSpinButton]="true"
+          (change)="handlePropertyUpdate('strokeWidth', $event.value)"
+          width="100%">
+        </ejs-numerictextbox>
+      </div>
+    </div>
+
+    <!-- Opacity (shape) -->
+    <div class="pp-row pp-opacity-row">
+      <div class="pp-label">Opacity</div>
+      <ejs-slider
+        [value]="opacityPercent"
+        [min]="0" [max]="100" [step]="10"
+        type="MinRange"
+        [showButtons]="false"
+        [tooltip]="{ isVisible: true, placement: 'Before', showOn: 'Hover' }"
+        (change)="handlePropertyUpdate('opacity', ($event.value ?? 100) / 100)">
+      </ejs-slider>
+      <span class="opacity-text">{{ opacityPercent }}</span>
+    </div>
+
+    <!-- Text Properties -->
+    @if (hasAnnotation) {
+      <div id="textPropertyContainer" class="db-text-prop-container">
+        <div class="db-prop-separator"></div>
+        <div class="pp-subheader">Text</div>
+
+        <!-- Row: Font family | Font size -->
+        <div class="pp-grid pp-grid-2-1">
+          <div class="pp-field">
+            <span class="pp-label">Font</span>
+            <ejs-dropdownlist
+              [dataSource]="fontFamilies"
+              [fields]="{ text: 'text', value: 'value' }"
+              [value]="properties.fontFamily || 'Arial'"
+              (change)="handlePropertyUpdate('fontFamily', $event.value)"
+              width="100%">
+            </ejs-dropdownlist>
+          </div>
+          <div class="pp-field">
+            <span class="pp-label">Size</span>
+            <ejs-numerictextbox
+              [value]="properties.fontSize"
+              format="n0" [min]="8" [max]="72" [step]="2" [showSpinButton]="true"
+              (change)="handlePropertyUpdate('fontSize', $event.value)"
+              width="100%">
+            </ejs-numerictextbox>
+          </div>
+        </div>
+
+        <!-- Row: Alignment dropdown | Color -->
+        <div class="pp-grid pp-grid-2-1">
+          <div class="pp-field">
+            <span class="pp-label">Alignment</span>
+            <ejs-dropdownlist
+              [dataSource]="textPositions"
+              [fields]="{ text: 'text', value: 'value' }"
+              [value]="properties.textPosition"
+              (change)="onTextPositionChange($event)"
+              width="100%">
+            </ejs-dropdownlist>
+          </div>
+          <div class="pp-field">
+            <span class="pp-label">Font Color</span>
+            <ejs-input ejs-colorpicker type="color"
+              [value]="properties.fontColor"
+              mode="Palette" [showButtons]="false"
+              (change)="onFontColorChange($event)" />
+          </div>
+        </div>
+
+        <!-- Row: Bold / Italic / Underline + paragraph alignment toolbar -->
+        <div class="pp-row pp-toolbar">
+          <div class="format-btns">
+            <button ejs-button content="B" [cssClass]="properties.bold ? 'e-flat e-active' : 'e-flat'"
+                    (click)="handlePropertyUpdate('bold', !properties.bold)"
+                    style="font-weight:bold;min-width:32px"></button>
+            <button ejs-button content="I" [cssClass]="properties.italic ? 'e-flat e-active' : 'e-flat'"
+                    (click)="handlePropertyUpdate('italic', !properties.italic)"
+                    style="font-style:italic;min-width:32px"></button>
+            <button ejs-button content="U" [cssClass]="properties.underline ? 'e-flat e-active' : 'e-flat'"
+                    (click)="handlePropertyUpdate('underline', !properties.underline)"
+                    style="text-decoration:underline;min-width:32px"></button>
+          </div>
+
+          <!-- Text Align: Left / Center / Right -->
+          <div class="e-btn-group" style="margin-left:30px">
+              <button ejs-button
+                [cssClass]="properties.textAlign === 'Left' ? 'e-flat e-active' : 'e-flat'"
+                iconCss="e-icons e-align-left"
+                title="Align Left"
+                (click)="onTextAlignChange('Left')"></button>
+              <button ejs-button
+                [cssClass]="properties.textAlign === 'Center' ? 'e-flat e-active' : 'e-flat'"
+                iconCss="e-icons e-align-center"
+                title="Align Center"
+                (click)="onTextAlignChange('Center')"></button>
+              <button ejs-button
+                [cssClass]="properties.textAlign === 'Right' ? 'e-flat e-active' : 'e-flat'"
+                iconCss="e-icons e-align-right"
+                title="Align Right"
+                (click)="onTextAlignChange('Right')"></button>
+          </div>
+        </div>
+
+        <!-- Text opacity - single row like your image -->
+        <div class="pp-row pp-opacity-row">
+          <div class="pp-label">Opacity</div>
+          <ejs-slider
+            [value]="(properties.textOpacity ?? 1) * 100"
+            [min]="0" [max]="100" [step]="10"
+            type="MinRange"
+            [showButtons]="false"
+            [tooltip]="{ isVisible: true }"
+            (change)="handlePropertyUpdate('textOpacity', ($event.value ?? 100) / 100)">
+          </ejs-slider>
+          <span class="opacity-text">{{ ((properties.textOpacity ?? 1) * 100) | number:'1.0-0' }}</span>
+        </div>
+      </div>
+      }
+  </div>
+</div>
+}
+<!-- Insert Hyperlink Dialog -->
+<app-insert-hyperlink-dialog
+  [visible]="hyperlinkDialogVisible"
+  [initialData]="hyperlinkInitialData"
+  (apply)="onHyperlinkApply($event)"
+  (cancel)="onHyperlinkCancel()"
+></app-insert-hyperlink-dialog>

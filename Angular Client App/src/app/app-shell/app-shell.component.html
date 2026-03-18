@@ -1,0 +1,67 @@
+<div class="app-container">
+
+  <!--- Toolbar ---------------------------------------------------->
+  <div class="toolbar-region">
+    <app-toolbar
+      [toolbarState]="toolbarState"
+      [availableGuests]="availableGuests">
+    </app-toolbar>
+  </div>
+
+  <!--- Content row ------------------------------------------------>
+  <div class="content-region">
+
+    <!-- Symbol Palette -->
+    <div class="palette-region">
+      <app-symbol-palette></app-symbol-palette>
+    </div>
+
+      <!-- Diagram Canvas -->
+    <div class="diagram-region">
+      <app-diagram-editor
+        (selectionChange)="onSelectionChange($event)"
+        (positionChange)="$event"
+        (sizeChange)="$event">
+      </app-diagram-editor>
+    </div>
+
+    <!-- Property Panels (context-sensitive) -->
+    @if (showNodePanel) {
+      <div class="panel-region">
+        <app-property-panel
+          [selectedItem]="selectedItemForPanel">
+        </app-property-panel>
+      </div>
+    }
+
+    @if (showConnectorPanel) {
+      <div class="panel-region">
+        <app-connector-property-panel
+          [selectedItem]="selectedItemForPanel">
+        </app-connector-property-panel>
+      </div>
+    }
+
+    @if (showMultiNodePanel) {
+      <div class="panel-region">
+        <app-multi-property-panel
+          [selectedItem]="selectedItemForPanel">
+        </app-multi-property-panel>
+      </div>
+    }
+        
+  </div>
+
+  <!--- Banner row --------------------------------------------------->
+  <div class="banner-region">
+    <app-bottom-banner></app-bottom-banner>
+  </div>
+
+  <ejs-toast #connectionMessage [target]="'#diagram'" [position]="{ X: 'Right', Y: 'Top' }">
+  </ejs-toast>
+
+</div>
+
+@if(spinner.visible$ | async){
+  <app-spinner></app-spinner>
+}

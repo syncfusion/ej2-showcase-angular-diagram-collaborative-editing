@@ -1,2 +1,14 @@
-# ej2-showcase-angular-diagram-collaborative-editing
-This showcase highlights real-time collaborative editing in the Angular Diagram. It demonstrates how multiple users can seamlessly work together on the same diagram with instant, synchronized updates.
+# ej2-angular-diagram-collaborative-editing
+
+EJ2 Angular Diagram Collaborative Editing Showcase Sample, A lightweight Angular project demonstrating real-time collaborative editing for diagrams.  
+Built with modern tooling to showcase sync interactions across multiple users.
+
+## Running the Project
+
+Make sure you are using **Node v20+**.  
+Then run:
+
+```bash
+npm install
+npm start
+```
